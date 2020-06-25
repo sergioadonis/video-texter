@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+
+    db:
+        image: postgres:12.3
+        environment:
+            - POSTGRES_USER=django
+            - POSTGRES_HOST_AUTH_METHOD=trust
+        ports:
+            - 5432:5432
+        volumes:
+            - ~/.pgdata/video-texter:/var/lib/postgresql/data
+        restart: always
+
