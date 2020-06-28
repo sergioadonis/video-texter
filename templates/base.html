@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {{ title }} {% endblock %} video-texter</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.6/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.6/dist/semantic.min.js"></script>
+    
+    {% block css %}{% endblock %}
+</head>
+<body>
+    <div class="ui basic inverted segment">
+        <div class="ui secondary inverted menu">
+            <div class="header item">video-texter</div>
+            <a href="{% url 'home_index' %}" class="item">Home</a>
+        </div>
+    </div>
+
+    <div class="ui basic segment">
+    {% block content %}{% endblock %}
+    </div>
+
+    {% block js %}{% endblock %}
+</body>
+</html>
