@@ -2,7 +2,24 @@ version: '3'
 
 services:
 
-    postgres:
+    web:
+        build: .
+        depends_on:
+            - database
+            - broker
+        command: python ./manage.py runserver 0.0.0.0:8000
+        ports:
+            - 8000:8000
+
+    worker:
+        build: .
+        depends_on:
+            - database
+            - broker
+        command: celery worker -A video_texter -l info 
+
+
+    database:
         image: postgres:12.3 # latest on July 2020
         environment:
             - POSTGRES_USER=django
@@ -13,7 +30,7 @@ services:
             - ~/.pgdata/video-texter:/var/lib/postgresql/data
         #restart: always
 
-    redis:
+    broker:
         image: redis:6.0.5 # latest on July 2020
         ports: 
             - 6379:6379
