@@ -1,7 +1,7 @@
 from django.contrib import admin
-from . import models
+from .models import YoutubeLink
 
 
-@admin.register(models.YoutubeLink)
+@admin.register(YoutubeLink)
 class YoutubeLinkAdmin(admin.ModelAdmin):
     list_display = ('link', 'title', 'language_code')
