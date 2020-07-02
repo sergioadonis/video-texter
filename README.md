@@ -35,6 +35,11 @@ Migrations:
 pipenv run ./manage.py migrate
 ```
 
+(optional) Create a root super user in oder to sign-in into the Admin Site:
+``` 
+pipenv run ./manage.py createsuperuser
+```
+
 (optional) Install postgresql-client and connect to db:
 ``` 
 psql --user django --host localhost
