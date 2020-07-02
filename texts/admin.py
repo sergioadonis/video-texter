@@ -4,4 +4,4 @@ from . import models
 
 @admin.register(models.YoutubeLink)
 class YoutubeLinkAdmin(admin.ModelAdmin):
-    list_display = ('link',)
+    list_display = ('link', 'title', 'language_code')
