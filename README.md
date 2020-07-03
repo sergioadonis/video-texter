@@ -62,6 +62,6 @@ Open [http://localhost:8000/](http://localhost:8000/) on your browser.
 
 ## Run celery
 Using celery to execute async tasks
-```bash
-pipenv run celery -A video_texter worker -l info
+```
+pipenv run celery worker -A video_texter -l info
 ```

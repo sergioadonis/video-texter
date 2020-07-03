@@ -7,11 +7,12 @@ services:
         depends_on:
             - database
             - broker
-        command: python ./manage.py runserver 0.0.0.0:8000
+        command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
         ports:
             - 8000:8000
         volumes:
             - .:/app
+
 
     worker:
         build: .
@@ -26,15 +27,14 @@ services:
         environment:
             - POSTGRES_USER=django
             - POSTGRES_HOST_AUTH_METHOD=trust
-        ports:
-            - 5432:5432
+        expose:
+            - 5432
         volumes:
             - ~/.pgdata/video-texter:/var/lib/postgresql/data
-        #restart: always
+
 
     broker:
         image: redis:6.0.5 # latest on July 2020
-        ports: 
-            - 6379:6379
-
+        expose:  
+            - 6379
 
