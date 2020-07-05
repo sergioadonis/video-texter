@@ -4,8 +4,8 @@ from celery import task
 
 
 @task
-def import_youtubelink_data(url):
-    print('Starting import_youtubelink_data task - url: {0}'.format(url))
+def import_youtubevideo_data(url):
+    print('Starting import_youtubevideo_data task - url: {0}'.format(url))
     mock_data = {
         'snippet': {
             'title': 'Other Title to Testing',
@@ -16,8 +16,8 @@ def import_youtubelink_data(url):
 
 
 @task
-def update_youtubelink_data(result, youtubelink_pk):
-    print('Starting update_youtubelink_data - youtubelink_pk: {0}'.format(youtubelink_pk))
-    from .models import YoutubeLink
-    YoutubeLink.objects.filter(pk=youtubelink_pk).update(data=result)
+def update_youtubevideo_data(result, pk):
+    print('Starting update_youtubevideo_data - pk: {0}; result: {1}'.format(pk, result))
+    from .models import YoutubeVideo
+    YoutubeVideo.objects.filter(pk=pk).update(data=result)
 
