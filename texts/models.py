@@ -23,11 +23,3 @@ class YoutubeVideo(models.Model):
         except:
             return ''
 
-
-class YoutubeVideoTask(models.Model):
-    youtubevideo = models.ForeignKey(YoutubeVideo, on_delete=models.CASCADE, related_name='tasks')
-    task_id = models.CharField(max_length=255, blank=True, default='')
-    
-    def __str__(self):
-        return self.task_id
-
