@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_celery_results',
     'texts',
 ]
 
@@ -126,3 +127,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Celery settings
 CELERY_BROKER_URL = config('REDIS_URL')
+CELERY_RESULT_BACKEND = 'django-db'
+
