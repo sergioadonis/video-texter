@@ -5,4 +5,7 @@ class TextsConfig(AppConfig):
     name = 'texts'
 
     def ready(self):
-        import texts.signals
+        try:
+            import texts.signals
+        except ModuleNotFoundError as err:
+            print(err)
