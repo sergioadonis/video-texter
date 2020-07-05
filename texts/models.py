@@ -10,6 +10,13 @@ class YoutubeVideo(models.Model):
         return self.title if self.title else self.url
 
     @property
+    def video_id(self):
+        try:
+            return self.link[-11:]
+        except:
+            return ''
+
+    @property
     def title(self):
         try:
             return self.data['snippet']['title']
