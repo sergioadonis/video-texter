@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import YoutubeVideo 
-from .tasks import import_youtubevideo_data, update_youtubevideo_data
+from .tasks import import_youtubevideo_data #, update_youtubevideo_data
 
 
 @admin.register(YoutubeVideo)
@@ -12,7 +12,8 @@ class YoutubeLinkAdmin(admin.ModelAdmin):
         for obj in queryset:
             url = obj.url
             pk = obj.pk
-            import_youtubevideo_data.apply_async(args=(url,), link=update_youtubevideo_data.s(pk))
+            # import_youtubevideo_data.apply_async(args=(url,), link=update_youtubevideo_data.s(pk))
+            import_youtubevideo_data.delay(pk=pk, url=url)
 
     import_data.short_description = 'Import data from Youtube'
 
