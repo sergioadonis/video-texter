@@ -7,6 +7,11 @@ services:
         depends_on:
             - database
             - broker
+        environment:
+            - SECRET_KEY=${SECRET_KEY}
+            - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
+            - REDIS_URL=redis://broker:6379
+            - DEBUG=${DEBUG}
         command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
         ports:
             - 8000:8000
@@ -19,13 +24,25 @@ services:
         depends_on:
             - database
             - broker
-        command: celery worker -A video_texter -l info 
+        environment:
+            - REDIS_URL=redis://broker:6379
+            - SECRET_KEY=${SECRET_KEY}
+            - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
+            - DEBUG=${DEBUG}
+            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+            - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+        command: bash -c "celery worker -A video_texter -l info"
+        volumes:
+            - ~/Videos:/tmp/videos
 
 
     database:
         image: postgres:12.3 # latest on July 2020
         environment:
-            - POSTGRES_USER=django
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_DB=${POSTGRES_DB}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
             - POSTGRES_HOST_AUTH_METHOD=trust
         expose:
             - 5432

@@ -12,14 +12,14 @@ class YoutubeVideo(models.Model):
     @property
     def video_id(self):
         try:
-            return self.link[-11:]
+            return self.url[-11:]
         except:
             return ''
 
     @property
     def title(self):
         try:
-            return self.data['snippet']['title']
+            return self.data['title']
         except:
             return ''
 

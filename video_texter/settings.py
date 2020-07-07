@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'video_texter.wsgi.application'
 from dj_database_url import parse as db_url
 
 DATABASES = {
-    'default': config('DATABASE_URL', cast=db_url)
+    'default': config('DATABASE_URL', cast=db_url, default='postgres://localhost:5432')
 }
 
 
@@ -127,6 +127,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Celery settings
-CELERY_BROKER_URL = config('REDIS_URL')
+CELERY_BROKER_URL = config('REDIS_URL', default='redis://localhost:6379')
 CELERY_RESULT_BACKEND = 'django-db'
-
