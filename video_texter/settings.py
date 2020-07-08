@@ -129,3 +129,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Celery settings
 CELERY_BROKER_URL = config('REDIS_URL', default='redis://localhost:6379')
 CELERY_RESULT_BACKEND = 'django-db'
+
+
+# In order to store videos
+VIDEOS_BUCKET=config('VIDEOS_BUCKET', default='')

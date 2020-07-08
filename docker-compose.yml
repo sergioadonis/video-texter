@@ -12,6 +12,7 @@ services:
             - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
             - REDIS_URL=redis://broker:6379
             - DEBUG=${DEBUG}
+            - VIDEOS_BUCKET=${VIDEOS_BUCKET}
         command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
         ports:
             - 8000:8000
