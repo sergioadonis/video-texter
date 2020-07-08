@@ -6,7 +6,7 @@ from video_texter.settings import VIDEOS_BUCKET
 
 @admin.register(YoutubeVideo)
 class YoutubeLinkAdmin(admin.ModelAdmin):
-    list_display = ('url', 'title', 'language_code')
+    list_display = ('url', 'title', 'language_code', 's3_url', )
     actions = ['import_data', 'copy_tos3']
 
     def import_data(self, request, queryset):

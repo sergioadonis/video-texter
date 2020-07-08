@@ -40,6 +40,9 @@ def copy_youtubevideo_tos3(pk, url, bucket):
     print('Starting upload to Amazon S3...')
     s3 = boto3.resource('s3')
     s3_result = s3.Object(bucket, name).upload_file(filename)
+
+    print('Updating S3 URL...')
+    YoutubeVideo.objects.filter(pk=pk).update(s3_url=f's3://{bucket}/{name}')
     
     print('End copy_youtubevideo_tos3 task - pk: {0}; url: {1}'.format(pk, url))
     return {

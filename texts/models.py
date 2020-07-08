@@ -5,6 +5,7 @@ from django.contrib.postgres.fields import JSONField
 class YoutubeVideo(models.Model):
     url = models.CharField(max_length=50)
     data = JSONField(default=dict, blank=True)
+    s3_url = models.CharField(max_length=50, blank=True, default='')
 
     def __str__(self):
         return self.title if self.title else self.url
