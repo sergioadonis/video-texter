@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY', default='supersecretkey')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_celery_results',
-    'texts',
+    'texts.apps.TextsConfig',
 ]
 
 MIDDLEWARE = [
@@ -132,4 +132,4 @@ CELERY_RESULT_BACKEND = 'django-db'
 
 
 # In order to store videos
-VIDEOS_BUCKET=config('VIDEOS_BUCKET', default='')
+VIDEOS_BUCKET=config('S3_BUCKET', default='')

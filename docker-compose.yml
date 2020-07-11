@@ -7,50 +7,31 @@ services:
         depends_on:
             - database
             - broker
-        environment:
-            - SECRET_KEY=${SECRET_KEY}
-            - DATABASE_URL=postgres://postgres@database:5432/videotexter
-            - REDIS_URL=redis://broker:6379
-            - DEBUG=${DEBUG}
-            - VIDEOS_BUCKET=${VIDEOS_BUCKET}
-        command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+        env_file: .env
+        command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:${PORT}"
         ports:
-            - 8000:8000
-        volumes:
-            - .:/app
-
+            - 8000:${PORT}
 
     worker:
         build: .
         depends_on:
             - database
             - broker
-        environment:
-            - REDIS_URL=redis://broker:6379
-            - SECRET_KEY=${SECRET_KEY}
-            - DATABASE_URL=postgres://postgres@database:5432/videotexter
-            - DEBUG=${DEBUG}
-            - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-            - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-            - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
-        command: bash -c "celery worker -A video_texter -l info"
-        volumes:
-            - ~/Videos:/tmp/videos
-
+        env_file: .env
+        command: celery worker -A ${CELERY_APP} -l info
 
     database:
         image: postgres:12.3 # latest on July 2020
-        environment:
-            - POSTGRES_DB=videotexter
-            - POSTGRES_HOST_AUTH_METHOD=trust
+        env_file: .env
         expose:
             - 5432
-#        volumes:
-#            - ~/.pgdata/video-texter:/var/lib/postgresql/data
-
+        volumes:
+            - "dbdata:/var/lib/postgresql/data"
 
     broker:
         image: redis:6.0.5 # latest on July 2020
         expose:  
             - 6379
 
+volumes:
+    dbdata:
